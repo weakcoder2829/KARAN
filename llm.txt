@@ -1,0 +1,8 @@
+# K A R A N  - Frontend Developer & Learning Fullstack
+
+> Portfolio: https://karan.dev
+> Bio: Frontend Developer learning Full Stack. Crafting fluid, high-performance web applications with modern design systems.
+> Education: MCA (Master of Computer Applications) - MDU / Aggarwal College, Haryana, India (2026 – 2028, Pursuing); BCA (Bachelor of Computer Applications, 2023 – 2026, Graduated), MDU / DAV Centenary College, Haryana, India.
+> Projects: Cosmo E-Commerce (cosmo-ecom.vercel.app), RidePlus (rideplus.ravindertech.me).
+> Tech Stack: HTML, CSS, JavaScript, TypeScript, Python, Java, React, Next.js, Tailwind CSS, Shadcn UI, Node.js, Express, SQL, Prisma, Docker, Git, GitHub Actions, Vercel, Cursor, Antigravity, Gemini AI.
+> Socials: GitHub (https://github.com/weakcoder2829), LinkedIn (https://www.linkedin.com/in/karan-singh-494954369/), Instagram (https://www.instagram.com/_mast_magan_/?__pwa=1)
