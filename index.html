@@ -1,0 +1,2215 @@
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K A R A N — Frontend Developer &amp; Learning Full Stack</title>
+  <meta name="description"
+    content="K A R A N  — Frontend developer learning full stack development. Building clean, modern websites and scalable web applications where design, functionality, and details matter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS v3 Official Standalone CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+          colors: {
+            darkbg: '#09090b',
+            darkpanel: '#121215',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+      (function () {
+        var saved = localStorage.getItem('theme');
+        var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+  </script>
+</head>
+
+<body
+  class="bg-[#fdfdfd] dark:bg-darkbg text-zinc-900 dark:text-zinc-100 font-sans antialiased min-h-screen selection:bg-blue-500 selection:text-white transition-colors duration-200 relative">
+
+  <!-- Interactive Grid Background Canvas with Reactive Shapes -->
+  <canvas id="interactiveGridCanvas"></canvas>
+
+  <div class="relative z-10 w-full pb-16">
+
+    <!-- MAIN PORTFOLIO VIEW WRAPPER -->
+    <div id="mainPortfolioView">
+
+      <!-- TOP NAVBAR ON THE RIGHT -->
+      <header class="sticky top-3 z-50 w-full px-3 sm:px-4 mb-2">
+        <div
+          class="max-w-4xl mx-auto flex items-center justify-between gap-2 sm:gap-4 p-2 sm:px-4 rounded-full border border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 shadow-md glass-nav transition-all">
+
+          <!-- Brand -->
+          <a href="#about" class="flex items-center gap-2 group pl-1 sm:pl-2 shrink-0">
+            <span
+              class="font-heading font-bold text-xs sm:text-sm tracking-wider text-zinc-900 dark:text-white group-hover:text-blue-500 transition-colors">K
+              A R A N </span>
+          </a>
+
+          <!-- Navigation Links Aligned Right -->
+          <div class="flex items-center gap-1 sm:gap-2.5">
+            <nav class="flex items-center gap-0.5 sm:gap-1 text-[11px] sm:text-xs font-medium text-zinc-600 dark:text-zinc-300">
+              <a href="#about"
+                class="px-1.5 sm:px-2.5 py-1 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">About</a>
+              <a href="#education"
+                class="px-1.5 sm:px-2.5 py-1 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">Education</a>
+              <a href="#projects"
+                class="px-1.5 sm:px-2.5 py-1 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">Projects</a>
+              <a href="#skills"
+                class="px-1.5 sm:px-2.5 py-1 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">Skills</a>
+            </nav>
+
+            <div class="w-px h-4 bg-zinc-200 dark:bg-zinc-800 mx-0.5 sm:mx-1"></div>
+
+            <!-- Theme Toggle Button -->
+            <button type="button" id="themeToggle"
+              class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors shrink-0"
+              aria-label="Toggle dark/light theme" title="Toggle theme">
+              <span class="dark:hidden">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path
+                    d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+              </span>
+              <span class="hidden dark:inline">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- 1. HERO BANNER ROW -->
+      <div class="w-full border-t border-b border-dashed border-grid-dashed" id="about">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <!-- Crosshair intersection markers -->
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <!-- Hero Banner Box with Video -->
+            <div
+              class="relative w-full h-44 sm:h-60 md:h-72 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-md bg-zinc-950 group">
+              <video autoplay loop muted playsinline
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                poster="footer_banner.jpg">
+                <source src="videoplayback.webm" type="video/webm">
+                <img src="footer_banner.jpg" alt="Cinematic Hero Artwork" class="w-full h-full object-cover object-top">
+              </video>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. PROFILE HEADER ROW -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 py-1">
+              <div class="flex items-center gap-3.5 sm:gap-4">
+                <div
+                  class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg border border-zinc-200 dark:border-zinc-800 p-1 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden shrink-0">
+                  <img src="pfp.jfif" alt="K A R A N " class="w-full h-full object-cover rounded-md">
+                </div>
+                <div class="flex flex-col justify-center">
+                  <h1
+                    class="font-heading font-semibold text-xl sm:text-2xl text-zinc-900 dark:text-white flex items-center gap-1.5 leading-tight">
+                    <span>K A R A N </span>
+                    <svg class="w-5 h-5 fill-blue-500 text-white shrink-0" viewBox="0 0 24 24"
+                      aria-label="Verified Developer">
+                      <path
+                        d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                      <path d="m9 12 2 2 4-4" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
+                    </svg>
+                  </h1>
+                  <div
+                    class="text-xs sm:text-sm font-medium text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-1.5">
+                    <span id="roleText" class="transition-all duration-300">Frontend developer</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. BIO & ACTIONS & SOCIALS ROW -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative space-y-4">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <!-- Bio Paragraph (Updated: Frontend Developer Learning Full Stack) -->
+            <p class="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-3xl">
+              Hey, I'm <strong class="font-semibold text-zinc-950 dark:text-white">K A R A N </strong>, a <strong
+                class="font-semibold text-zinc-950 dark:text-white">frontend developer</strong> who is actively learning
+              <strong class="font-semibold text-zinc-950 dark:text-white">full stack development</strong>. I love
+              building <strong class="font-semibold text-zinc-950 dark:text-white">clean, modern websites and
+                apps</strong> where design, functionality, and even the smallest details matter. My focus is on making
+              products that are both <strong class="font-semibold text-zinc-950 dark:text-white">Scalable</strong> and
+              <strong class="font-semibold text-zinc-950 dark:text-white">visually satisfying</strong>.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-2.5 pt-1">
+              <a href="https://cal.com/mastmagan/secret" target="_blank" rel="noopener noreferrer" id="bookCallBtn"
+                class="book-call-trigger cursor-pointer inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-[13px] font-medium bg-gradient-to-b from-zinc-700 via-zinc-800 to-zinc-950 text-white border border-zinc-600 dark:border-zinc-800 shadow-sm hover:from-zinc-600 hover:to-zinc-900 transition-all active:translate-y-px">
+                <svg class="w-4 h-4 mr-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                  <line x1="11" y1="14" x2="12" y2="14" />
+                  <line x1="12" y1="14" x2="12" y2="18" />
+                </svg>
+                <span>Book a intro Call</span>
+              </a>
+
+              <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=karansingh2829kf@gmail.com" target="_blank"
+                rel="noopener noreferrer" id="copyEmailBtn" data-email="karansingh2829kf@gmail.com"
+                class="cursor-pointer inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-[13px] font-medium bg-gradient-to-b from-zinc-700 via-zinc-800 to-zinc-950 text-white border border-zinc-600 dark:border-zinc-800 shadow-sm hover:from-zinc-600 hover:to-zinc-900 transition-all active:translate-y-px">
+                <svg class="w-4 h-4 mr-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8" />
+                  <polyline points="22,7 12,13 2,7" />
+                  <line x1="19" y1="16" x2="19" y2="22" />
+                  <line x1="16" y1="19" x2="22" y2="19" />
+                </svg>
+                <span>Send a Email</span>
+              </a>
+            </div>
+
+            <!-- Socials Row -->
+            <div class="space-y-2 pt-1">
+              <p class="text-[13px] text-zinc-500 dark:text-zinc-400">Here are my <strong
+                  class="font-semibold text-zinc-900 dark:text-white">socials</strong></p>
+              <div class="flex flex-wrap gap-2">
+                <a href="#" onclick="event.preventDefault(); alert('Opening Resume...');"
+                  class="inline-flex text-xs font-medium items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 border border-zinc-200/60 dark:border-zinc-800/60 transition-colors">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M15 12h-5M15 8h-5M19 17V5a2 2 0 0 0-2-2H4M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" />
+                  </svg>
+                  <span>Resume</span>
+                </a>
+                <a href="https://github.com/weakcoder2829" target="_blank" rel="noopener noreferrer"
+                  class="inline-flex text-xs font-medium items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 border border-zinc-200/60 dark:border-zinc-800/60 transition-colors">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                  </svg>
+                  <span>GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/karan-singh-494954369/" target="_blank" rel="noopener noreferrer"
+                  class="inline-flex text-xs font-medium items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 border border-zinc-200/60 dark:border-zinc-800/60 transition-colors">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/_mast_magan_/?__pwa=1" target="_blank" rel="noopener noreferrer"
+                  class="inline-flex text-xs font-medium items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800/80 dark:text-zinc-200 border border-zinc-200/60 dark:border-zinc-800/60 transition-colors">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. EDUCATION TITLE ROW (HEADING CHANGED TO EDUCATION) -->
+      <div class="w-full border-b border-dashed border-grid-dashed" id="education">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <h2 class="font-heading font-semibold text-lg sm:text-xl text-zinc-950 dark:text-white tracking-tight">
+              Education</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. EDUCATION CONTENT ROW (MCA 2026-2028 & BCA 2023-2026) -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-3">
+
+              <!-- Card 1: MCA (2026 – 2028, Pursuing) -->
+              <article class="exp-accordion-card is-open border-b border-dashed border-grid-dashed pb-3">
+                <div class="exp-header-btn w-full flex items-start gap-3.5 text-left cursor-pointer select-none group"
+                  role="button" tabindex="0" aria-expanded="true">
+                  <div
+                    class="w-11 h-11 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-inner flex items-center justify-center p-1 shrink-0 group-hover:border-zinc-400 dark:group-hover:border-zinc-600 transition-colors">
+                    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                      <path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5" />
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3
+                        class="font-semibold text-sm sm:text-base text-zinc-950 dark:text-white group-hover:text-blue-500 transition-colors">
+                        Master of Computer Application (MCA)</h3>
+                      <span
+                        class="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200/60 dark:border-emerald-800/60">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Pursuing</span>
+                      </span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 font-normal mt-0.5">Postgraduate
+                      Student · Maharshi Dayanand University (MDU) / Aggarwal College</p>
+                  </div>
+                  <div class="hidden sm:flex flex-col items-end gap-0.5 shrink-0">
+                    <div class="flex items-center gap-1.5 text-xs font-medium text-zinc-900 dark:text-zinc-200">
+                      <span>2026 – 2028 (Pursuing)</span>
+                      <svg
+                        class="accordion-chevron w-4 h-4 text-zinc-400 group-hover:text-zinc-200 transition-transform duration-200"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </div>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Haryana, India · Full Time</p>
+                  </div>
+                </div>
+
+                <!-- Mobile Meta -->
+                <div
+                  class="sm:hidden flex justify-between items-center mt-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/60 text-xs text-zinc-500">
+                  <span>2026 – 2028 (Pursuing)</span>
+                  <span>MDU (Aggarwal College) · Haryana, India</span>
+                </div>
+
+                <!-- Collapsible Content -->
+                <div class="accordion-collapse-grid">
+                  <div class="overflow-hidden pt-3 sm:pl-14">
+                    <ul class="space-y-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">
+                      <li class="flex items-start gap-2">
+                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 shrink-0"></span>
+                        <span>Enrolled in the 2-year postgraduate Master of Computer Applications program (2026 – 2028)
+                          at Maharshi Dayanand University (MDU) / Aggarwal College, advancing technical mastery in
+                          <strong>Full-Stack Architectures</strong>, modern frontend frameworks (React, Next.js), and
+                          backend API engineering.</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 shrink-0"></span>
+                        <span>Specializing in <strong>Cloud Computing</strong>, microservices, scalable distributed
+                          systems, database indexing, and web performance optimization.</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 shrink-0"></span>
+                        <span>Designing and developing real-world full-stack software applications with real-time
+                          features, secure authentication, and production-grade responsive UI systems.</span>
+                      </li>
+                    </ul>
+                    <div class="flex flex-wrap gap-1.5 pt-3">
+                      <span
+                        class="inline-flex items-center gap-1.5 px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">
+                        <img class="w-3.5 h-3.5 object-contain"
+                          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt=""
+                          style="filter:invert(1);">
+                        <span>Next.js</span>
+                      </span>
+                      <span
+                        class="inline-flex items-center gap-1.5 px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">
+                        <img class="w-3.5 h-3.5 object-contain"
+                          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="">
+                        <span>React</span>
+                      </span>
+                      <span
+                        class="inline-flex items-center gap-1.5 px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">
+                        <img class="w-3.5 h-3.5 object-contain"
+                          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="">
+                        <span>Node.js</span>
+                      </span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">Full-Stack</span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">Cloud
+                        Computing</span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">System
+                        Design</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Card 2: BCA (2023 – 2026, Graduated) -->
+              <article class="exp-accordion-card is-open">
+                <div class="exp-header-btn w-full flex items-start gap-3.5 text-left cursor-pointer select-none group"
+                  role="button" tabindex="0" aria-expanded="true">
+                  <div
+                    class="w-11 h-11 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-inner flex items-center justify-center p-1 shrink-0 group-hover:border-zinc-400 dark:group-hover:border-zinc-600 transition-colors">
+                    <svg class="w-6 h-6 text-zinc-700 dark:text-zinc-300" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                      <path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5" />
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3
+                        class="font-semibold text-sm sm:text-base text-zinc-950 dark:text-white group-hover:text-blue-500 transition-colors">
+                        Bachelor of Computer Application (BCA)</h3>
+                      <span
+                        class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 px-2 py-0.5 rounded-md border border-zinc-200/60 dark:border-zinc-700/60">Graduated</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 font-normal mt-0.5">Graduate ·
+                      Maharshi Dayanand University (MDU) / DAV Centenary College</p>
+                  </div>
+                  <div class="hidden sm:flex flex-col items-end gap-0.5 shrink-0">
+                    <div class="flex items-center gap-1.5 text-xs font-medium text-zinc-900 dark:text-zinc-200">
+                      <span>2023 – 2026</span>
+                      <svg
+                        class="accordion-chevron w-4 h-4 text-zinc-400 group-hover:text-zinc-200 transition-transform duration-200"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </div>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Haryana, India · Full Time</p>
+                  </div>
+                </div>
+
+                <!-- Mobile Meta -->
+                <div
+                  class="sm:hidden flex justify-between items-center mt-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/60 text-xs text-zinc-500">
+                  <span>2023 – 2026</span>
+                  <span>MDU (DAV Centenary College) · Haryana, India</span>
+                </div>
+
+                <!-- Collapsible Content -->
+                <div class="accordion-collapse-grid">
+                  <div class="overflow-hidden pt-3 sm:pl-14">
+                    <ul class="space-y-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">
+                      <li class="flex items-start gap-2">
+                        <span class="w-1.5 h-1.5 bg-zinc-400 dark:bg-zinc-500 rounded-full mt-2 shrink-0"></span>
+                        <span>Graduated with comprehensive foundations in core Computer Science concepts including
+                          <strong>Data Structures</strong>, <strong>Algorithms</strong>, and <strong>Object-Oriented
+                            Programming</strong> with C++.</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <span class="w-1.5 h-1.5 bg-zinc-400 dark:bg-zinc-500 rounded-full mt-2 shrink-0"></span>
+                        <span>Completed coursework in <strong>Database Management Systems (DBMS)</strong>,
+                          normalization, relational schema design, SQL querying, and Operating Systems.</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <span class="w-1.5 h-1.5 bg-zinc-400 dark:bg-zinc-500 rounded-full mt-2 shrink-0"></span>
+                        <span>Engineered practical software projects and responsive modern web applications, cementing
+                          core full-stack software development skills.</span>
+                      </li>
+                    </ul>
+                    <div class="flex flex-wrap gap-1.5 pt-3">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">C++</span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">Data
+                        Structure</span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">Algorithm</span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">Operating
+                        System</span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">DBMS</span>
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-xs text-zinc-700 dark:text-zinc-300">SQL</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. PROJECTS TITLE ROW -->
+      <div class="w-full border-b border-dashed border-grid-dashed" id="projects">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <h2 class="font-heading font-semibold text-lg sm:text-xl text-zinc-950 dark:text-white tracking-tight">
+              Projects</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. PROJECTS GRID ROW (ONLY TWO PROJECTS AS REQUESTED) -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
+
+              <!-- PROJECT 1: Cosmo E-Commerce -->
+              <div class="w-full flex flex-col group">
+                <div
+                  class="relative w-full h-52 sm:h-60 md:h-64 rounded-none border border-zinc-200 dark:border-zinc-800 p-1 bg-zinc-100 dark:bg-zinc-900/50 transition-colors duration-300 group-hover:border-zinc-400 dark:group-hover:border-zinc-600 overflow-hidden">
+                  <div
+                    class="relative w-full h-full bg-zinc-950 overflow-hidden rounded-xs border border-zinc-800/80 cursor-pointer select-none group/box"
+                    id="cosmoAutoScrollBox" data-project="cosmo"
+                    title="Click to view details · Auto-scrolling live page">
+                    <!-- Top chrome bar -->
+                    <div
+                      class="absolute top-0 inset-x-0 h-6 bg-zinc-950/95 border-b border-zinc-800/90 backdrop-blur-xs flex items-center justify-between px-2.5 z-30">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-500/80"></span>
+                        <span class="w-2 h-2 rounded-full bg-amber-500/80"></span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-500/80"></span>
+                      </div>
+                      <a href="https://cosmo-ecom.vercel.app" target="_blank" rel="noopener noreferrer"
+                        class="text-[9px] font-mono text-zinc-400 hover:text-white transition-colors"
+                        onclick="event.stopPropagation();">cosmo-ecom.vercel.app</a>
+                      <div class="w-8"></div>
+                    </div>
+
+                    <!-- Click hint overlay pill -->
+                    <div
+                      class="absolute top-8 right-2.5 z-30 opacity-0 group-hover/box:opacity-100 transition-opacity duration-200 pointer-events-none">
+                      <span
+                        class="inline-flex items-center gap-1 text-[10px] font-medium bg-black/85 text-white px-2 py-0.5 rounded shadow border border-white/20 backdrop-blur-xs">
+                        <svg class="w-2.5 h-2.5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <span>Click to view details</span>
+                      </span>
+                    </div>
+
+                    <!-- Full-page Screenshot Image with Smooth Auto-Scroll -->
+                    <div class="absolute inset-0 pt-6 overflow-hidden pointer-events-none">
+                      <img id="cosmoAutoScrollImg" src="cosmo-women.png"
+                        alt="Women's Clothing & Accessories - Cosmo E-Commerce"
+                        class="w-full h-auto block will-change-transform"
+                        style="transform: translateY(0px); transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);"
+                        loading="eager">
+                    </div>
+
+                    <!-- Floating Bottom Section Badge & Progress -->
+                    <div class="absolute bottom-2.5 left-3 z-20 pointer-events-none">
+                      <span id="cosmoSectionBadge"
+                        class="text-[8px] uppercase tracking-wider font-bold text-pink-400 bg-pink-950/90 border border-pink-500/30 px-2 py-0.5 rounded shadow-md backdrop-blur-xs transition-all duration-300">
+                        Women's Collection · Hero
+                      </span>
+                    </div>
+
+                    <!-- Scroll Progress Bar -->
+                    <div class="absolute bottom-0 inset-x-0 h-0.5 bg-white/10 z-20">
+                      <div id="cosmoScrollProgress"
+                        class="h-full bg-gradient-to-r from-pink-500 to-amber-400 transition-all duration-500"
+                        style="width: 0%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Details -->
+                <div class="flex items-center justify-between mt-3 px-1">
+                  <h3
+                    class="font-semibold text-sm sm:text-base text-zinc-900 dark:text-white group-hover:text-blue-500 transition-colors">
+                    Cosmo E-Commerce</h3>
+                  <div class="flex items-center gap-1.5 text-xs font-semibold uppercase text-amber-500 select-none">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span>Building</span>
+                  </div>
+                </div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 px-1 line-clamp-2 leading-relaxed">
+                  Modern high-end fashion e-commerce storefront featuring interactive editorial hero showcases with
+                  pricing hotspots, dynamic catalogs, cart &amp; wishlist management, and responsive mega-menu
+                  navigation.
+                </p>
+
+                <!-- Accurate Tech Stack -->
+                <div class="flex flex-wrap gap-1 px-1 mt-2.5">
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <span class="font-mono text-[9px] font-bold bg-amber-400 text-black px-1 rounded-xs">JS</span>
+                    <span>JavaScript (ES6+)</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="">
+                    <span>HTML5</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="">
+                    <span>CSS3 Grid &amp; Variables</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">Cart
+                    &amp; Wishlist Engine</span>
+                  <span
+                    class="inline-flex items-center px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">LocalStorage
+                    State</span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" alt=""
+                      style="filter:invert(1);">
+                    <span>Vercel</span>
+                  </span>
+                </div>
+
+                <!-- Action Links: Live Demo & GitHub & Details -->
+                <div class="px-1 pt-3 flex items-center justify-between mt-auto">
+                  <a class="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-900 dark:text-zinc-200 hover:text-blue-500 group-hover:text-blue-500 transition-colors"
+                    href="https://cosmo-ecom.vercel.app" target="_blank" rel="noopener noreferrer">
+                    <span>Visit Live Site</span>
+                    <svg
+                      class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="M7 7h10v10M7 17 17 7" />
+                    </svg>
+                  </a>
+                  <div class="flex items-center gap-1.5">
+                    <button type="button"
+                      class="open-project-details-btn inline-flex items-center gap-1 px-2.5 py-1 rounded-md border border-blue-500/40 bg-blue-500/10 hover:bg-blue-500/20 text-xs font-medium text-blue-600 dark:text-blue-400 transition-colors cursor-pointer"
+                      data-project="cosmo" title="View project details">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      <span>Details</span>
+                    </button>
+                    <a class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors"
+                      href="https://github.com/weakcoder2829" target="_blank" rel="noopener noreferrer"
+                      title="View Source on GitHub">
+                      <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path
+                          d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                      </svg>
+                      <span>GitHub</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PROJECT 2: RidePlus (Hackathon Team Project) -->
+              <div class="w-full flex flex-col group">
+                <div
+                  class="relative w-full h-52 sm:h-60 md:h-64 rounded-none border border-zinc-200 dark:border-zinc-800 p-1 bg-zinc-100 dark:bg-zinc-900/50 transition-colors duration-300 group-hover:border-zinc-400 dark:group-hover:border-zinc-600 overflow-hidden">
+                  <div
+                    class="relative w-full h-full bg-[#12151c] overflow-hidden rounded-xs border border-zinc-800/80 cursor-pointer select-none group/box"
+                    id="rideplusAutoScrollBox" data-project="rideplus"
+                    title="Click to view details · Auto-scrolling live page">
+                    <!-- Top chrome bar -->
+                    <div
+                      class="absolute top-0 inset-x-0 h-6 bg-[#161a22]/95 border-b border-zinc-800/90 backdrop-blur-xs flex items-center justify-between px-2.5 z-30">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-500/80"></span>
+                        <span class="w-2 h-2 rounded-full bg-amber-500/80"></span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-500/80"></span>
+                      </div>
+                      <a href="https://rideplus.ravindertech.me" target="_blank" rel="noopener noreferrer"
+                        class="text-[9px] font-mono text-zinc-400 hover:text-white transition-colors"
+                        onclick="event.stopPropagation();">rideplus.ravindertech.me</a>
+                      <div class="w-8"></div>
+                    </div>
+
+                    <!-- Click hint overlay pill -->
+                    <div
+                      class="absolute top-8 right-2.5 z-30 opacity-0 group-hover/box:opacity-100 transition-opacity duration-200 pointer-events-none">
+                      <span
+                        class="inline-flex items-center gap-1 text-[10px] font-medium bg-black/85 text-white px-2 py-0.5 rounded shadow border border-white/20 backdrop-blur-xs">
+                        <svg class="w-2.5 h-2.5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <span>Click to view details</span>
+                      </span>
+                    </div>
+
+                    <!-- Full-page Screenshot Image with Smooth Auto-Scroll -->
+                    <div class="absolute inset-0 pt-6 overflow-hidden pointer-events-none">
+                      <img id="rideplusAutoScrollImg" src="rideplus.png" alt="RidePlus Carpooling Platform"
+                        class="w-full h-auto block will-change-transform"
+                        style="transform: translateY(0px); transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);"
+                        loading="eager">
+                    </div>
+
+                    <!-- Floating Bottom Section Badge & Progress -->
+                    <div class="absolute bottom-2.5 left-3 z-20 pointer-events-none">
+                      <span id="rideplusSectionBadge"
+                        class="text-[8px] uppercase tracking-wider font-bold text-amber-400 bg-amber-950/90 border border-amber-500/30 px-2 py-0.5 rounded shadow-md backdrop-blur-xs transition-all duration-300">
+                        Carpooling · Platform Hero
+                      </span>
+                    </div>
+
+                    <!-- Scroll Progress Bar -->
+                    <div class="absolute bottom-0 inset-x-0 h-0.5 bg-white/10 z-20">
+                      <div id="rideplusScrollProgress"
+                        class="h-full bg-gradient-to-r from-amber-500 to-emerald-400 transition-all duration-500"
+                        style="width: 0%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Details -->
+                <div class="flex items-center justify-between mt-3 px-1">
+                  <div class="flex items-center gap-2">
+                    <h3
+                      class="font-semibold text-sm sm:text-base text-zinc-900 dark:text-white group-hover:text-blue-500 transition-colors">
+                      RidePlus</h3>
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded border border-amber-200/60 dark:border-amber-800/60">
+                      🏆 Hackathon Team
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-1.5 text-xs font-semibold uppercase text-blue-500 select-none">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                    <span>Live</span>
+                  </div>
+                </div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 px-1 line-clamp-2 leading-relaxed">
+                  Collaborative hackathon team project. An intelligent carpooling platform enabling commuters to publish
+                  or join rides, split travel expenses, connect with verified drivers, and travel comfortably between
+                  cities.
+                </p>
+
+                <!-- Accurate Tech Stack -->
+                <div class="flex flex-wrap gap-1 px-1 mt-2.5">
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt=""
+                      style="filter:invert(1);">
+                    <span>Next.js (App Router)</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <span class="font-mono text-[9px] font-bold">TS</span>
+                    <span>TypeScript</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+                      alt="">
+                    <span>Tailwind CSS</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">Clerk
+                    Auth</span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+                      alt="">
+                    <span>PostgreSQL</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg" alt=""
+                      style="filter:invert(1);">
+                    <span>Prisma ORM</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">
+                    <img class="w-3 h-3 object-contain"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="">
+                    <span>Docker</span>
+                  </span>
+                  <span
+                    class="inline-flex items-center px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-900/70 text-[11px] text-zinc-700 dark:text-zinc-300">Mapbox
+                    Routing</span>
+                </div>
+
+                <!-- Action Links: Live Demo & GitHub & Details -->
+                <div class="px-1 pt-3 flex items-center justify-between mt-auto">
+                  <a class="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-900 dark:text-zinc-200 hover:text-blue-500 group-hover:text-blue-500 transition-colors"
+                    href="https://rideplus.ravindertech.me" target="_blank" rel="noopener noreferrer">
+                    <span>Visit Live Site</span>
+                    <svg
+                      class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="M7 7h10v10M7 17 17 7" />
+                    </svg>
+                  </a>
+                  <div class="flex items-center gap-1.5">
+                    <button type="button"
+                      class="open-project-details-btn inline-flex items-center gap-1 px-2.5 py-1 rounded-md border border-blue-500/40 bg-blue-500/10 hover:bg-blue-500/20 text-xs font-medium text-blue-600 dark:text-blue-400 transition-colors cursor-pointer"
+                      data-project="rideplus" title="View project details">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      <span>Details</span>
+                    </button>
+                    <a class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors"
+                      href="https://github.com/weakcoder2829" target="_blank" rel="noopener noreferrer"
+                      title="View Source on GitHub">
+                      <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path
+                          d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                      </svg>
+                      <span>GitHub</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. TECH STACK TITLE ROW -->
+      <div class="w-full border-b border-dashed border-grid-dashed" id="skills">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <h2 class="font-heading font-semibold text-lg sm:text-xl text-zinc-950 dark:text-white tracking-tight">Tech
+              Stack</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. TECH STACK CONTENT ROW -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <div class="flex flex-wrap gap-2 items-center select-none py-1">
+              <!-- HTML -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML"
+                    class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>HTML</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  HTML5
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- CSS -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS"
+                    class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>CSS</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  CSS3
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- JavaScript -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/166f34de-fed6-4fcb-bb4c-550007079ad0-javascript-original.png"
+                    alt="Javascript" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Javascript</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  JavaScript (ES6+)
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- TypeScript -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/2594cb56-22f3-4bf1-9171-03a94e519741-typescript-original.png"
+                    alt="Typescript" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Typescript</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  TypeScript
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Python -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/f8b17135-6ab3-4b61-9985-9e2ae801f725-python-original.png"
+                    alt="Python" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Python</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Python
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Java -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"
+                    class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Java</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Java
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- React -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/3ad5f527-5546-48e1-a534-20030113f5dd-react-original.png"
+                    alt="React" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>React</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  React.js
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Next.js -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/0e8e52d9-1393-4d8d-9472-1a2d21cae2cd-nextjs.png"
+                    alt="Next.js" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Next.js</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Next.js (App Router)
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tailwind CSS -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/4b22925c-30b7-4af7-84c9-3cf405f0da64-tailwindcss-original.png"
+                    alt="Tailwind" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Tailwind</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Tailwind CSS
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Shadcn UI -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/1ce48ac2-dce2-4028-b7fc-ed6bca870f7c-shadcn-ui.png"
+                    alt="Shadcn" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Shadcn</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Shadcn UI
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Motion -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg"
+                    alt="Motion" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Motion</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Framer Motion
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zustand -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/2f2e4524-15c3-4fcb-a37f-89cd8ee787e7-zustand-original.png"
+                    alt="Zustand" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Zustand</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Zustand State
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Redux Toolkit -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg"
+                    alt="Redux Toolkit" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Redux Toolkit</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Redux Toolkit (RTK)
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Node.js -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/93d82cbe-50b3-4991-9043-c92d6b6ae00b-Node.js.png"
+                    alt="Nodejs" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Nodejs</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Node.js
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Express -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/5685e63c-8464-4dad-a2d9-8d55c0dd0034-SkillIconsExpressjsDark.png"
+                    alt="Express" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Express</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Express.js
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- SQL -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg"
+                    alt="SQL" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>SQL</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  SQL Database
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Prisma -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/b3c060c7-d102-4970-84b6-90a3bf9506ff-prisma-original-white.png"
+                    alt="Prisma" class="w-4 h-4 object-contain shrink-0 filter dark:invert-0 invert" loading="lazy">
+                  <span>Prisma</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Prisma ORM
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Docker -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/7599d154-e5dd-4201-88de-7fce0535ef13-docker.png"
+                    alt="Docker" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Docker</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Docker Containers
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Git -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/266b660d-b92c-4048-82d0-fcdee1ee55ce-git-original.png"
+                    alt="Git" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Git</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Git Version Control
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- GitHub Actions -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/8f5b858f-968a-45dd-9182-67cf18f0a28e-githubactions-original.png"
+                    alt="GitHub Actions" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>GitHub Actions</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  GitHub Actions (CI/CD)
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vercel -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/676abc7f-1451-4a77-a33c-f96408fbd770-vercel-original.png"
+                    alt="Vercel" class="w-4 h-4 object-contain shrink-0 filter dark:invert-0 invert" loading="lazy">
+                  <span>Vercel</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Vercel Deployment
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cursor -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/e4771fe0-8da4-40f0-aae2-0ae89149a6ee-cursor.png"
+                    alt="Cursor" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Cursor</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Cursor AI Editor
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Antigravity -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/ce2739ed-b91e-4e35-bbaa-8ea98abfda4d-Google-Antigravity-Icon-Full-Color.png"
+                    alt="Antigravity" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Antigravity</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Google Antigravity
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gemini AI -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img
+                    src="https://aset-s3.elitecoder.tech/user_3E4v4wgF6LXw3bIexfbwSwaan0Z/8b657827-6e83-471a-b674-266abd2e7755/4aaf2e30-3a1b-4561-86f3-4b0a765c48f7-gemini-color.png"
+                    alt="Gemini AI" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Gemini AI</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Google Gemini AI
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Motion -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <svg class="w-4 h-4 fill-current text-purple-500" viewBox="0 0 24 24">
+                    <path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z" />
+                  </svg>
+                  <span>Motion</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Framer Motion
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zustand -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <span class="text-sm leading-none">🐻</span>
+                  <span>Zustand</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Zustand Store
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Redux Toolkit -->
+              <div class="relative group/tech inline-block">
+                <div
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-all duration-150 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer select-none">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg"
+                    alt="Redux Toolkit" class="w-4 h-4 object-contain shrink-0" loading="lazy">
+                  <span>Redux Toolkit</span>
+                </div>
+                <div
+                  class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 -translate-y-1 group-hover/tech:opacity-100 group-hover/tech:translate-y-0 transition-all duration-150 z-30 px-2 py-0.5 rounded bg-white text-zinc-950 text-[11px] font-semibold shadow-md whitespace-nowrap border border-zinc-200">
+                  Redux Toolkit (RTK)
+                  <div
+                    class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-white">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. QUOTE ROW -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-4 md:p-6 relative text-center">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <p class="font-heading italic font-medium text-base sm:text-lg text-zinc-900 dark:text-zinc-100">“Code with Intent”</p>
+            <span class="text-[11px] uppercase tracking-widest text-zinc-500 font-mono mt-1 block">K A R A N </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. FOOTER ROW -->
+      <div class="w-full border-b border-dashed border-grid-dashed" id="contact">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <!-- ARTWORK FOOTER BANNER WITH dfs.jpg & FALLING CHERRY BLOSSOM PETALS -->
+            <div
+              class="w-full relative overflow-hidden rounded-md border border-zinc-200/50 dark:border-zinc-800/80 bg-black shadow-lg">
+              <canvas id="cherryBlossomCanvas"
+                class="cherry-blossom-canvas absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+              <img src="dfs.jpg" alt="Artwork Footer"
+                class="w-full h-[280px] sm:h-[340px] md:h-[380px] object-cover object-center filter brightness-95 dark:brightness-105 select-none transition-transform duration-700 hover:scale-[1.01]">
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent pointer-events-none">
+              </div>
+
+              <div
+                class="absolute inset-0 z-20 flex flex-col items-center justify-end pb-6 sm:pb-8 px-4 text-center space-y-1.5 select-none">
+                <div
+                  class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-white/90 drop-shadow-md">
+                  <span>You're the</span>
+                  <span class="font-bold text-amber-300" id="visitorCount">100th</span>
+                  <span>visitor</span>
+                </div>
+                <div class="font-mono text-[11px] sm:text-xs text-white/80 drop-shadow-md" id="footerLiveClock">
+                  Mon, Sep 14, 2026 | 12:02:27 GMT+5:30
+                </div>
+                <p
+                  class="text-[10px] sm:text-xs md:text-sm text-white/90 font-sans tracking-wide flex items-center justify-center gap-2 flex-wrap drop-shadow-md pt-0.5">
+                  <span>© 2026 <a target="_blank" rel="noopener noreferrer"
+                      class="font-medium underline decoration-current/30 hover:decoration-current underline-offset-4 transition-colors text-white"
+                      href="https://github.com/weakcoder2829">K A R A N </a>. The source · All rights reserved</span>
+                  <span class="text-white/40 select-none">·</span>
+                  <a target="_blank"
+                    class="hover:text-white transition-colors underline underline-offset-2 decoration-current/30 hover:decoration-current text-white/80"
+                    href="robots.txt">robots.txt</a>
+                  <span class="text-white/40 select-none">·</span>
+                  <a target="_blank"
+                    class="hover:text-white transition-colors underline underline-offset-2 decoration-current/30 hover:decoration-current text-white/80"
+                    href="sitemap.xml">sitemap.xml</a>
+                  <span class="text-white/40 select-none">·</span>
+                  <a target="_blank"
+                    class="hover:text-white transition-colors underline underline-offset-2 decoration-current/30 hover:decoration-current text-white/80"
+                    href="llm.txt">llm.txt</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /MAIN PORTFOLIO VIEW WRAPPER -->
+
+    <!-- ============================================================
+         PROJECT DETAILS VIEW (Exact reference view matching screenshots)
+         ============================================================ -->
+    <div id="projectDetailsView" class="hidden transition-all duration-300">
+
+      <!-- TOP HEADER: BACK TO PROJECTS & THEME TOGGLE -->
+      <div
+        class="w-full border-b border-dashed border-grid-dashed sticky top-0 z-40 bg-[#fdfdfd]/95 dark:bg-[#09090b]/95 backdrop-blur-md">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div
+            class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative flex items-center justify-between">
+            <!-- Corner Cross Markers -->
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <!-- Back Navigation Button matching screenshot 2 -->
+            <button type="button" id="backToProjectsHeaderBtn"
+              class="inline-flex items-center gap-2.5 text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100 hover:text-blue-500 dark:hover:text-blue-400 transition-colors cursor-pointer group">
+              <div
+                class="w-7 h-7 rounded-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center group-hover:border-blue-500/50 transition-colors">
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </div>
+              <span class="tracking-tight">Projects</span>
+            </button>
+
+            <!-- Theme Toggle for Details View -->
+            <button type="button" id="detailThemeToggle"
+              class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors"
+              aria-label="Toggle theme" title="Toggle theme">
+              <span class="dark:hidden">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path
+                    d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+              </span>
+              <span class="hidden dark:inline">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOWCASE HERO IMAGE (Large screenshot preview matching Screenshot 2) -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <!-- Interactive Auto-Scrolling Live Mockup Browser Viewport -->
+            <div
+              class="relative w-full h-[320px] sm:h-[460px] md:h-[580px] rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-950 overflow-hidden shadow-2xl group/detailBox select-none"
+              id="detailAutoScrollBox" title="Hover to pause auto-scroll · Use mouse wheel to explore">
+
+              <!-- Browser Chrome Bar -->
+              <div
+                class="absolute top-0 inset-x-0 h-8 bg-zinc-950/95 border-b border-zinc-800/90 backdrop-blur-md flex items-center justify-between px-2 sm:px-3 z-30">
+                <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                  <span class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-red-500/80"></span>
+                  <span class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-amber-500/80"></span>
+                  <span class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-emerald-500/80"></span>
+                </div>
+
+                <!-- URL Address pill -->
+                <a id="detailDomainBar" href="#" target="_blank" rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-700/60 text-[10px] sm:text-[11px] font-mono text-zinc-300 hover:text-white hover:border-zinc-500 transition-colors max-w-[150px] sm:max-w-none truncate"
+                  title="Open live website in new tab" onclick="event.stopPropagation();">
+                  <svg class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span id="detailDomainText">live-project.dev</span>
+                  <svg class="w-2.5 h-2.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+
+                <!-- Play/Pause & Reset Controls -->
+                <div class="flex items-center gap-1">
+                  <button type="button" id="detailAutoScrollToggle"
+                    class="p-1 rounded text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Pause / Resume Auto-scroll" aria-label="Pause or resume auto-scroll">
+                    <svg id="detailPauseIcon" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                      <rect x="6" y="4" width="4" height="16" />
+                      <rect x="14" y="4" width="4" height="16" />
+                    </svg>
+                    <svg id="detailPlayIcon" class="w-3.5 h-3.5 hidden" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                  </button>
+                  <button type="button" id="detailScrollToTopBtn"
+                    class="p-1 rounded text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Scroll to Top" aria-label="Scroll to top">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m18 15-6-6-6 6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Full-width Screenshot Image with Smooth Auto-Scroll -->
+              <div class="absolute inset-0 pt-8 overflow-hidden pointer-events-none">
+                <img id="detailPreviewImg" src="RidePlus.png" alt="Project Screenshot"
+                  class="w-full h-auto block will-change-transform"
+                  style="transform: translateY(0px); transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);"
+                  loading="eager">
+              </div>
+
+              <!-- Floating Bottom Section Badge & Hover Hint -->
+              <div class="absolute bottom-3 left-3 z-20 pointer-events-none flex items-center gap-2">
+                <span id="detailSectionBadge"
+                  class="text-[9px] sm:text-[10px] uppercase tracking-wider font-bold text-amber-300 bg-black/90 border border-amber-500/40 px-2.5 py-1 rounded shadow-lg backdrop-blur-xs transition-all duration-300">
+                  Hero Showcase
+                </span>
+                <span
+                  class="text-[9px] sm:text-[10px] text-zinc-400 bg-black/75 px-2 py-0.5 rounded border border-white/10 backdrop-blur-xs hidden md:inline-block">
+                  Hover to pause · Wheel to scroll
+                </span>
+              </div>
+
+              <!-- Scroll Progress Bar -->
+              <div class="absolute bottom-0 inset-x-0 h-1 bg-white/10 z-20">
+                <div id="detailScrollProgress"
+                  class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 transition-all duration-500"
+                  style="width: 0%;"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TITLE & ACTIONS & SUMMARY (Matching Screenshot 2 & 3) -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative space-y-4">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1">
+              <h1 id="detailTitle"
+                class="font-heading font-bold text-xl sm:text-2xl md:text-3xl text-zinc-950 dark:text-white uppercase tracking-tight">
+                RIDEPLUS</h1>
+              <div class="flex flex-wrap items-center gap-2 shrink-0">
+                <a id="detailGithubLink" href="https://github.com/weakcoder2829" target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-colors shadow-xs">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                  </svg>
+                  <span>Github</span>
+                </a>
+                <a id="detailLiveLink" href="https://rideplus.ravindertech.me" target="_blank" rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-colors shadow-xs">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                  <span>Link</span>
+                </a>
+                <span id="detailStatusBadge"
+                  class="inline-flex items-center px-3 py-1.5 rounded-sm bg-blue-600 text-white text-xs font-semibold select-none shadow-xs">Completed</span>
+              </div>
+            </div>
+
+            <p id="detailSummary" class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-3xl">
+              A carpooling platform enabling users to publish or join rides and communicate, discover nearby routes, and
+              reduce travel costs through shared expenses.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- APPS (FRONTEND & BACKEND TECH STACKS) -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative space-y-4">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-mono">APPS
+            </h3>
+
+            <div class="space-y-4 pt-1">
+              <div>
+                <h4 class="text-sm font-medium text-zinc-800 dark:text-zinc-200 mb-2">Frontend</h4>
+                <div id="detailFrontendChips" class="flex flex-wrap gap-2"></div>
+              </div>
+
+              <div>
+                <h4 class="text-sm font-medium text-zinc-800 dark:text-zinc-200 mb-2">Backend</h4>
+                <div id="detailBackendChips" class="flex flex-wrap gap-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURES (Bullet list matching Screenshot 3) -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative space-y-3">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-mono">
+              FEATURES</h3>
+
+            <ul id="detailFeaturesList"
+              class="space-y-3.5 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed pt-1"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM NAVIGATION BAR -->
+      <div class="w-full border-b border-dashed border-grid-dashed">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+          <div
+            class="w-full border-x border-dashed border-grid-dashed p-3 md:p-4 relative flex items-center justify-between">
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 top-0 -translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center left-0 -translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+            <div
+              class="absolute select-none cross-marker z-10 flex items-center justify-center right-0 translate-x-1/2 bottom-0 translate-y-1/2 w-4 h-4"
+              aria-hidden="true">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-[1.25]" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5v14" />
+              </svg>
+            </div>
+
+            <button type="button" id="backToProjectsBottomBtn"
+              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-medium text-zinc-800 dark:text-zinc-200 transition-colors cursor-pointer">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+              <span>Back to all projects</span>
+            </button>
+            <span class="text-xs text-zinc-400 font-mono hidden sm:inline select-none">Press Esc or click back</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /PROJECT DETAILS VIEW -->
+
+  </div>
+
+  <div
+    class="toast-popup px-4 py-2.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-xl text-xs font-medium"
+    id="toastNotice">
+    ✓ Email copied to clipboard! 🚀
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- CAL.COM SCHEDULING MODAL -->
+  <div id="calBookingModal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md transition-opacity duration-200"
+    role="dialog" aria-modal="true" aria-labelledby="calModalTitle">
+    <div
+      class="cal-modal-panel relative w-full max-w-md overflow-hidden rounded-2xl border border-zinc-800 bg-[#0d0d10] text-zinc-100 shadow-2xl flex flex-col font-sans">
+
+      <!-- Top Action Bar -->
+      <div
+        class="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800/80 bg-zinc-950/40 text-xs text-zinc-400 select-none">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="font-mono text-[11px] text-zinc-300 tracking-wide uppercase">Cal.com Scheduling</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="https://cal.com/mastmagan/secret" id="calExternalLinkBtn" target="_blank" rel="noopener noreferrer"
+            class="hover:text-zinc-200 transition-colors inline-flex items-center gap-1 text-[11px] font-medium text-zinc-400">
+            <span>Open on Cal.com</span>
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+          </a>
+          <button type="button" id="closeCalModalBtn" aria-label="Close modal"
+            class="w-7 h-7 rounded-md border border-zinc-800 bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Shortened & Compact) -->
+      <div class="p-6 space-y-5 bg-[#0e0e12]">
+        <!-- Host Avatar & Name -->
+        <div class="flex items-center gap-3.5">
+          <div class="relative shrink-0">
+            <img src="pfp.jfif" alt="K A R A N "
+              class="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 shadow-md">
+            <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-zinc-900"
+              title="Online / Available"></span>
+          </div>
+          <div>
+            <p class="text-xs text-zinc-400 font-medium">Karan Singh</p>
+            <h4 class="text-sm font-semibold text-white flex items-center gap-1.5">
+              <span>K A R A N </span>
+              <svg class="w-3.5 h-3.5 text-blue-500 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+              </svg>
+            </h4>
+          </div>
+        </div>
+
+        <!-- Meeting Title & Description -->
+        <div class="space-y-1.5">
+          <h3 id="calModalTitle" class="text-xl font-bold tracking-tight text-white">15 min meeting</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Let's discuss full-stack projects, frontend architecture,
+            tech opportunities, or quick advice.</p>
+        </div>
+
+        <!-- Meeting Meta Badges -->
+        <div class="flex flex-wrap gap-2 text-xs font-medium text-zinc-300">
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">
+            <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span>15m duration</span>
+          </div>
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">
+            <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+            </svg>
+            <span>Cal Video / Google Meet</span>
+          </div>
+        </div>
+
+        <!-- Prominent Open on Cal.com Button -->
+        <div class="pt-2">
+          <a href="https://cal.com/mastmagan/secret" target="_blank" rel="noopener noreferrer"
+            class="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-sm shadow-md transition-all flex items-center justify-center gap-2 group cursor-pointer active:translate-y-px">
+            <span>Open on Cal.com to Book</span>
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div
+        class="px-5 py-3 border-t border-zinc-800/80 bg-zinc-950/60 flex items-center justify-between text-[11px] text-zinc-500 select-none">
+        <a href="https://cal.com/mastmagan/secret" target="_blank" rel="noopener noreferrer"
+          class="flex items-center gap-1.5 font-medium hover:text-zinc-300 transition-colors">
+          <span class="text-zinc-400 font-bold tracking-tight">Cal.com</span>
+          <span class="text-zinc-600">·</span>
+          <span>Open source scheduling</span>
+        </a>
+        <span class="text-[10px] text-zinc-500 font-mono">Instant booking</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
