@@ -104,7 +104,7 @@ interface Vector3D {
     }
     try {
       localStorage.setItem('theme', theme);
-    } catch (e) {}
+    } catch (e) { }
   }
 
   function toggleTheme(): void {
