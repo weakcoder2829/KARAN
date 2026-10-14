@@ -109,54 +109,75 @@
         });
     }
     // ============================================================
-    // 5. LIVE TICKING GMT CLOCK IN FOOTER
+    // 5. NAVBAR INTERACTIVE SMOOTH SCROLLING & ACTIVE SCROLL SPY
     // ============================================================
-    const clockEl = document.getElementById('footerLiveClock');
-    function updateLiveClock() {
-        if (!clockEl)
-            return;
-        const now = new Date();
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const dayName = days[now.getDay()];
-        const monthName = months[now.getMonth()];
-        const date = now.getDate();
-        const year = now.getFullYear();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const offsetMin = -now.getTimezoneOffset();
-        const offsetSign = offsetMin >= 0 ? '+' : '-';
-        const absOffset = Math.abs(offsetMin);
-        const offsetHours = Math.floor(absOffset / 60);
-        const offsetMins = absOffset % 60;
-        const gmtString = 'GMT' + offsetSign + offsetHours + (offsetMins > 0 ? ':' + String(offsetMins).padStart(2, '0') : '');
-        clockEl.textContent = `${dayName}, ${monthName} ${date}, ${year} | ${hours}:${minutes}:${seconds} ${gmtString}`;
-    }
-    updateLiveClock();
-    setInterval(updateLiveClock, 1000);
-    // ============================================================
-    // 6. VISITOR COUNTER (STARTS FROM 100)
-    // ============================================================
-    function formatOrdinal(n) {
-        const s = ["th", "st", "nd", "rd"];
-        const v = n % 100;
-        return n + (s[(v - 20) % 10] || s[v] || s[0]);
-    }
-    function initVisitorCounter() {
-        const counterEl = document.getElementById('visitorCount');
-        if (!counterEl)
-            return;
-        const stored = localStorage.getItem('karan_visitor_counter');
-        let visits = stored ? parseInt(stored, 10) : 100;
-        if (isNaN(visits) || visits < 100) {
-            visits = 100;
+    function initNavbar() {
+        const navLinks = document.querySelectorAll('.nav-link, a[href^="#"]');
+        const sectionIds = ['about', 'education', 'projects', 'skills', 'contact'];
+        const sections = sectionIds
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+        function setActiveNav(targetId) {
+            document.querySelectorAll('#topNav .nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + targetId) {
+                    link.classList.add('bg-zinc-200/90', 'dark:bg-zinc-800', 'text-zinc-950', 'dark:text-white', 'font-semibold', 'shadow-2xs');
+                    link.classList.remove('text-zinc-600', 'dark:text-zinc-300');
+                }
+                else {
+                    link.classList.remove('bg-zinc-200/90', 'dark:bg-zinc-800', 'text-zinc-950', 'dark:text-white', 'font-semibold', 'shadow-2xs');
+                    link.classList.add('text-zinc-600', 'dark:text-zinc-300');
+                }
+            });
+        }
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#'))
+                    return;
+                const targetId = href.slice(1);
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    // If in project details view, exit back to main portfolio
+                    const detailsView = document.getElementById('projectDetailsView');
+                    if (detailsView && !detailsView.classList.contains('hidden')) {
+                        closeProjectDetails(false);
+                    }
+                    e.preventDefault();
+                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                    setActiveNav(targetId);
+                    history.pushState(null, '', href);
+                }
+            });
+        });
+        // Scroll spy to highlight active section on scrolling
+        let scrollTimeout = null;
+        window.addEventListener('scroll', () => {
+            if (scrollTimeout)
+                return;
+            scrollTimeout = setTimeout(() => {
+                scrollTimeout = null;
+                const scrollPos = window.scrollY + 140;
+                let currentSection = null;
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    if (sections[i].offsetTop <= scrollPos) {
+                        currentSection = sections[i].id;
+                        break;
+                    }
+                }
+                if (currentSection) {
+                    setActiveNav(currentSection);
+                }
+            }, 60);
+        }, { passive: true });
+        // Initial active link
+        const currentHash = window.location.hash.slice(1);
+        if (currentHash && document.getElementById(currentHash)) {
+            setActiveNav(currentHash);
         }
         else {
-            visits++;
+            setActiveNav('about');
         }
-        localStorage.setItem('karan_visitor_counter', String(visits));
-        counterEl.textContent = formatOrdinal(visits);
     }
     // ============================================================
     // 7. AUTO-SCROLL PROJECT PREVIEWS ON HOMEPAGE
@@ -208,6 +229,15 @@
             "Safety Guidelines & Reviews",
             "RidePlus Community Footer"
         ], 2200);
+        setupScroller('timoAutoScrollBox', 'timoAutoScrollImg', 'timoSectionBadge', 'timoScrollProgress', [
+            "Faridabad Campus Network · Hero",
+            "How Timo Works · Student Accountability",
+            "Anonymous Confession Post Box & Radar",
+            "Mobile App Download & Phone Install",
+            "Anti-Bullying & Community Safety Rules",
+            "Confidential Student Support & Tele-MANAS",
+            "Timo Campus Network Footer"
+        ], 2200);
     }
     // ============================================================
     // 8. INTERACTIVE PROJECT DETAILS SYSTEM
@@ -216,7 +246,7 @@
         rideplus: {
             title: "RIDEPLUS",
             domain: "rideplus.ravindertech.me",
-            image: "RidePlus.png",
+            image: "rideplus.png",
             status: "Completed",
             statusClass: "bg-blue-600 text-white",
             github: "https://github.com/weakcoder2829",
@@ -331,6 +361,68 @@
                 {
                     title: "Responsive Drawer Mega Navigation",
                     desc: "Touch-optimized mobile drawer with multi-department classification (Ladies, Men, Kids, Home) and instant search integration."
+                }
+            ]
+        },
+        timo: {
+            title: "TIMO",
+            domain: "gettimo.vercel.app",
+            image: "timo.png",
+            status: "Live",
+            statusClass: "bg-emerald-600 text-white font-semibold shadow-xs",
+            github: "https://github.com/weakcoder2829",
+            link: "https://gettimo.vercel.app",
+            summary: "The private, authenticated pulse of college life. An anonymous community and verified student network for Faridabad colleges (Aggarwal College, JC Bose UST YMCA, and local campuses). Enables verified students to share confessions, campus pulse, and real-time banter with cryptographic identity dissociation.",
+            sections: [
+                "Faridabad Campus Network · Hero",
+                "How Timo Works · Student Accountability",
+                "Anonymous Confession Post Box & Radar",
+                "Mobile App Download & Phone Install",
+                "Anti-Bullying & Community Safety Rules",
+                "Confidential Student Support & Tele-MANAS",
+                "Timo Campus Network Footer"
+            ],
+            frontend: [
+                { name: "Next.js 14 (App Router)", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", invert: true },
+                { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+                { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+                { name: "Turbopack", textOnly: true },
+                { name: "Lucide Icons", textOnly: true },
+                { name: "Claymorphism Design", textOnly: true },
+                { name: "Vercel Edge", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg", invert: true }
+            ],
+            backend: [
+                { name: "Next.js Server Actions", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", invert: true },
+                { name: "Cryptographic Anonymity Shield", textOnly: true },
+                { name: "Faridabad Campus Radar", textOnly: true },
+                { name: "-5 Karma Moderation Engine", textOnly: true },
+                { name: "Tele-MANAS Support Integration", textOnly: true },
+                { name: "Edge Caching & SSR", textOnly: true }
+            ],
+            features: [
+                {
+                    title: "Cryptographically Decoupled Student Anonymity",
+                    desc: "Student verification confirms university roll numbers from Aggarwal College, JC Bose UST (YMCA), and local colleges, while post tokens remain cryptographically dissociated from real student names."
+                },
+                {
+                    title: "Faridabad Campus Location Radar",
+                    desc: "Allows students to tag confessions and banter to specific campus spots such as Aggarwal College Central Lawn/Canteen, YMCA Library, or Sector 15 Student Adda."
+                },
+                {
+                    title: "Anonymous Animal Guise Personas",
+                    desc: "Students can cycle between fun anonymous avatars (Anonymous Fox 🦊, Owl 🦉, Chameleon 🦎, Panda 🐼, Sloth 🦥) with randomized pseudonyms for each post."
+                },
+                {
+                    title: "Community-Driven -5 Karma Moderation Filter",
+                    desc: "Democratic moderation where any post or comment receiving -5 net downvotes from verified students is permanently and automatically purged from the server."
+                },
+                {
+                    title: "Direct Android APK & Mobile Experience",
+                    desc: "Optimized mobile experience with instant direct Android APK installation (8.4 MB) without requiring Play Store accounts, complete with real-time push alerts."
+                },
+                {
+                    title: "Confidential Student Crisis & Tele-MANAS Support",
+                    desc: "Built-in 24/7 confidential mental health crisis support hotline (Tele-MANAS 14416) for students going through stressful semesters."
                 }
             ]
         }
@@ -512,6 +604,14 @@
                 openProjectDetails('rideplus');
             });
         }
+        const timoBox = document.getElementById('timoAutoScrollBox');
+        if (timoBox) {
+            timoBox.addEventListener('click', (e) => {
+                if (e.target.closest('a'))
+                    return;
+                openProjectDetails('timo');
+            });
+        }
         const detailButtons = document.querySelectorAll('.open-project-details-btn');
         detailButtons.forEach((btn) => {
             btn.addEventListener('click', (e) => {
@@ -620,6 +720,9 @@
             }
             else if (hash === '#project-cosmo') {
                 openProjectDetails('cosmo', false);
+            }
+            else if (hash === '#project-timo') {
+                openProjectDetails('timo', false);
             }
             else {
                 const detailsView = document.getElementById('projectDetailsView');
@@ -1259,7 +1362,7 @@
     // INITIALIZE ON DOM READY
     // ============================================================
     function initAll() {
-        initVisitorCounter();
+        initNavbar();
         initAutoScrollProjects();
         initProjectDetails();
         initCalBookingModal();
